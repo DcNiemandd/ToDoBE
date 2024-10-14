@@ -22,6 +22,11 @@ You can get task(s) from '/tasks' and '/tasks/{id}'.
 You can insert task to '/tasks/'. 
 You can update task to '/tasks/{id}'.
 
+Program flags:
+  - '--help' Shows this help
+  - '--port' Sets port, default '8000'
+  - '--db-name' Sets name of used db file, default 'todo'
+
 NOTE: This program will make file database.`);
     return;
   }
