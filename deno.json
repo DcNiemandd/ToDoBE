@@ -1,6 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run --watch -A main.ts"
+    "dev": "deno run --watch -A main.ts",
+    "compile": "deno compile -A -o=todo main.ts  && echo \"todo.exe --port=8000 --db-name=todo\" > ./run-to-do.BAT"
   },
   "imports": {
   }
