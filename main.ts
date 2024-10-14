@@ -122,6 +122,8 @@ NOTE: This program will make file database.`);
       return new Response("Path not found", { status: 404 });
     },
   );
+
+  db.close();
 }
 
 if (import.meta.main) main(Deno.args);
