@@ -2,21 +2,10 @@ import { Database } from "jsr:@db/sqlite";
 import { parseArgs } from "jsr:@std/cli/parse-args";
 
 function main(args: string[]) {
-  const db = new Database("todo.db");
-
-  db.exec(`
-  CREATE TABLE IF NOT EXISTS tasks (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    label TEXT,
-    description TEXT,
-    marked BOOLEAN  
-);  
-`);
-
   const flags = parseArgs(args, {
-    string: ["port"],
+    string: ["port", "db-name"],
     boolean: ["help"],
-    default: { port: "8000" },
+    default: { port: "8000", "db-name": "todo" },
   });
 
   if (flags.help) {
@@ -36,6 +25,17 @@ You can update task to '/tasks/{id}'.
 NOTE: This program will make file database.`);
     return;
   }
+
+  const db = new Database(flags["db-name"] + ".db");
+
+  db.exec(`
+  CREATE TABLE IF NOT EXISTS tasks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    label TEXT,
+    description TEXT,
+    marked BOOLEAN  
+);  
+`);
 
   Deno.serve(
     {
