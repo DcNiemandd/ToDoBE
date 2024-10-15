@@ -119,6 +119,15 @@ NOTE: This program will make file database.`);
         }
       }
 
+      if (req.method === "DELETE" && taskID) {
+        db.prepare(`
+            DELETE FROM tasks 
+            WHERE id = ? 
+            RETURNING *;
+          `).all([taskID]);
+        return new Response("Task deleted", { status: 200 });
+      }
+
       return new Response("Path not found", { status: 404 });
     },
   );
