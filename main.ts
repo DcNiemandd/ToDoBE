@@ -42,7 +42,7 @@ NOTE: This program will make file database.`);
 );  
 `);
 
-  Deno.serve(
+  const server = Deno.serve(
     {
       port: parseInt(flags.port),
     },
@@ -123,7 +123,7 @@ NOTE: This program will make file database.`);
     },
   );
 
-  db.close();
+  server.finished.finally(() => db.close());
 }
 
 if (import.meta.main) main(Deno.args);
