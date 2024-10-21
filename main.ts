@@ -82,6 +82,10 @@ NOTE: This program will make file database.`);
         try {
           const { label, description, marked } = await req.json();
 
+          if (!label) {
+            throw new Error("Missing task label");
+          }
+
           const task = db.prepare(
             "INSERT INTO tasks (label, description, marked) VALUES (?, ?, ?) RETURNING *",
           ).get([label, description, marked]);
@@ -125,7 +129,12 @@ NOTE: This program will make file database.`);
             WHERE id = ? 
             RETURNING *;
           `).all([taskID]);
-        return new Response("Task deleted", { status: 200 });
+        return new Response("Task deleted", {
+          status: 200,
+          headers: {
+            "Content-Type": "text/html; charset=utf-8",
+          },
+        });
       }
 
       return new Response("Path not found", { status: 404 });
